@@ -30,11 +30,11 @@ const startTracker = () => {
                     break;
 
                 case "View All Roles":
-                    displayAllRoles();
+                    displayRoles;
                     break;
 
                 case "Update Role":
-                    displayRoles();
+                    updateRole();
                     break;
 
                 case "Add Department":
