@@ -24,7 +24,7 @@ VALUES
 ("Leslee", "Perkins", 3, 1), -- 6
 ("Chance", "Russell", 2, 3), -- 7
 ("Rebecca", "Roberts", 5, 3), -- 8
-("Zack", "Byers", 6, 4), -- 9
-("Jackie", "Shepard", 7, 4), --10
-("Felix", "Green", 7, 4) -- 11
+("Zack", "Byers", 6, 2), -- 9
+("Jackie", "Shepard", 7, 9), --10
+("Felix", "Green", 7, 9) -- 11
 ;

@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS hospital_employees;
-CREATE DATABASE hospital_employees;
-USE hospital_employees;
+DROP DATABASE IF EXISTS technology_employees;
+CREATE DATABASE technology_employees;
+USE technology_employees;
 
 CREATE TABLE department (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
