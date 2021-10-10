@@ -37,20 +37,41 @@ class DB {
         )
     }
 
-    addDept() {
-
+    addDept(newDepartment) {
+        console.log(newDepartment)
+        return this.connection
+        .promise()
+        .query(
+                `INSERT INTO department SET ?`, newDepartment
+        )
     }
 
-    updateRole() {
-
+    updateRole(roleId, employeeID) {
+        return this.connection
+        .promise()
+        .query(
+            `UPDATE employees SET role_id ?
+            WHERE id = ?`, [roleId, employeeID]
+        )
     }
 
-    addEmployee() {
-
+    addEmployee(newEmployee) {
+        return this.connection
+        .promise()
+        .query(
+            `INSERT INTO employees (first_name, last_name, role_id, manager_id)
+            VALUES (?,?,?,?)`, newEmployee
+        )
     }
 
-    deleteEmployee() {
-
+    deleteEmployee(deleted) {
+        console.log(deleted)
+        return this.connection
+        .promise()
+        .query(
+            `DELETE FROM employees
+            WHERE id = ?` , deleted
+        )
     }
 }
 
