@@ -9,7 +9,7 @@ class DB {
         return this.connection
         .promise()
         .query(
-            `SELECT employees.id, employees.first_name, employees.last_name, role.title, role.salary, department.name AS Department, 
+            `SELECT employees.id, employees.first_name, employees.last_name, role.title, role.salary, department.department_name AS Department, 
             role.salary, CONCAT(manager.first_name, " ", manager.last_name) AS Manager
             FROM employees 
             LEFT JOIN role on employees.role_id = role.id 
@@ -31,7 +31,7 @@ class DB {
         return this.connection
         .promise()
         .query(
-            `SELECT role.id ad Id, title as Role, salary as Salary, department.name as Department
+            `SELECT role.id ad Id, title as Role, salary as Salary, department.department_name as Department
             FROM role
             LEFT JOIN department ON role.department_id = department.id;`
         )
@@ -50,7 +50,7 @@ class DB {
         return this.connection
         .promise()
         .query(
-            `UPDATE employees SET role_id ?
+            `UPDATE employees SET role_id = ?
             WHERE id = ?`, [roleId, employeeID]
         )
     }
