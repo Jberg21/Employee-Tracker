@@ -42,7 +42,7 @@ class DB {
         return this.connection
         .promise()
         .query(
-                `INSERT INTO department SET ?`, newDepartment
+                `INSERT INTO department SET ?`, Department
         )
     }
 
