@@ -35,16 +35,16 @@ const startTracker = () => {
                     break;
 
                 case "Update Role":
-                    updateRole();
+                    updatedRole();
                     break;
 
-                // case "Add Department":
-                //     addDepartment();
-                //     break;
+                case "Add Department":
+                    addDepartment();
+                    break;
 
-                // case "Add New Employee":
-                //     addNewEmployee();
-                //     break;
+                case "Add New Employee":
+                    addNewEmployee();
+                    break;
 
                 // case "Delete Employee":
                 //     deleteEmployee();
@@ -62,7 +62,7 @@ const startTracker = () => {
 }
 
 function displayAllEmployees() {
-db.displayAllEmployees()
+db.findAll()
 .then(([rows]) => {
     let data = rows;
     console.log('\n ');
@@ -72,7 +72,7 @@ db.displayAllEmployees()
 })
 }
 function displayAllDept() {
-    db.displayAllDept()
+    db.findDept()
     .then(([rows]) => {
         let data = rows;
         console.log('\n ');
@@ -83,7 +83,7 @@ function displayAllDept() {
 }
 
 function displayRoles() {
-    db.displayRoles()
+    db.findRole()
     .then(([rows]) => {
         let data = rows;
         console.log('\n ');
@@ -92,57 +92,62 @@ function displayRoles() {
         startTracker()
     })
 }
-async function updateRole() {
-    db.displayAllEmployees().then(allEmployees => {
-        return allEmployees
+async function updatedRole() {
+   let data = await inquirer.prompt({
+       name: 'employeeID',
+       type: 'input',
+       message: 'What Employee ID needs updated?',
     })
-    .then(employees => {
-        db.displayRoles().then(displayRoles => {
-            return {employees, displayRoles}
-        }).then(employeeData => {
-            console.log(employeeData.displayRoles [0][0])
-            // console.log(employeeData.employees [0])
-            inquirer.prompt([{
-                type: 'list',
-                name: 'id',
-                message: 'Which employee?',
-                choices: employeeData.employees[0].map(employee => ({name: employee.first_name, value: employee.id}))
-            },
-            {
-                type: 'list',
-                name: 'role_id',
-                message: 'Employee id?',
-                choices: employeeData.displayRoles[0].map(role => ({name: role.Role, value: role.Id}))
-            }]).then(updateRole => {
-                // console.log(updateRole)
-                return db.updateRole(updateRole.role_id, updateRole.id)
-            }).then(response => {
-                // console.log('done')
-                startTracker();
-            })
-        })
+    let role = await inquirer.prompt({
+        name: 'roleId',
+        type: 'input',
+        message: 'What Role ID needs set?',
+    })
+    db.updateRole(data.employeeID, role.roleId);
+    startTracker();
+}
+function addDepartment() {
+    inquirer.prompt([{
+        name: 'name',
+        type: 'input',
+        message: 'What is the name of the new department?'
+    }])
+    .then(dept => {
+         db.addDept(dept)
+         startTracker();
+
     })
 }
-// function addDepartment() {
-//     db.addDepartment()
-//     .then(([rows]) => {
-//         let data = rows;
-//         console.log('\n ');
-//         console.table(data);
-//         console.log('\n ');
-//         startTracker()
-//     })
-// }
-// function addNewEmployee() {
-//     db.addNewEmployee()
-//     .then(([rows]) => {
-//         let data = rows;
-//         console.log('\n ');
-//         console.table(data);
-//         console.log('\n ');
-//         startTracker()
-//     })
-// }
+function addNewEmployee() {
+    inquirer.prompt([{
+        name: 'first_name',
+        type: 'input',
+        message: 'Please enter employees first name',
+    },
+    {
+        name: 'last_name',
+        type: 'input',
+        message: 'Please enter employee last name'
+    },
+    {
+        name: 'role',
+        type: 'input',
+        message: 'Please enter in a role ID'
+    },
+    {
+        name: 'manager',
+        type: 'input',
+        message: 'What is the manager ID'
+    }
+   
+])
+        .then(answer => {
+            const data = [answer.first_name, answer.last_name, answer.role, answer.manager];
+            console.log(data);
+            db.addEmployee(data);
+            startTracker();
+                })
+}
 // function deleteEmployee() {
 //     db.deleteEmployee()
 //     .then(([rows]) => {
