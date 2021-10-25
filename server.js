@@ -16,7 +16,6 @@ const startTracker = () => {
             "Update Role",
             "Add Department",
             "Add New Employee",
-            "Delete Employee",
             "Quit"
         ]
     })
@@ -106,20 +105,21 @@ async function updatedRole() {
     db.updateRole(data.employeeID, role.roleId);
     startTracker();
 }
-function addDepartment() {
-    inquirer.prompt([{
-        name: 'name',
+async function addDepartment() {
+    let data = await inquirer.prompt([{
+        name: 'deptName',
         type: 'input',
         message: 'What is the name of the new department?'
     }])
     .then(dept => {
-         db.addDept(dept)
+        let info = dept.deptName
+         db.addDept(info)
          startTracker();
 
     })
 }
-function addNewEmployee() {
-    inquirer.prompt([{
+async function addNewEmployee() {
+    await inquirer.prompt([{
         name: 'first_name',
         type: 'input',
         message: 'Please enter employees first name',
@@ -138,11 +138,16 @@ function addNewEmployee() {
         name: 'manager',
         type: 'input',
         message: 'What is the manager ID'
+    },
+    {
+        name: 'department',
+        type: 'input',
+        message: 'What is the department ID'
     }
    
 ])
         .then(answer => {
-            const data = [answer.first_name, answer.last_name, answer.role, answer.manager];
+            const data = [answer.first_name, answer.last_name, answer.role, answer.manager, answer.department];
             console.log(data);
             db.addEmployee(data);
             startTracker();

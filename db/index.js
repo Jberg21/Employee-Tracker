@@ -42,7 +42,7 @@ class DB {
         return this.connection
         .promise()
         .query(
-                `INSERT INTO department SET ?`, newDepartment
+                `INSERT INTO department SET department_name = ?`, newDepartment
         )
     }
 
@@ -59,8 +59,8 @@ class DB {
         return this.connection
         .promise()
         .query(
-            `INSERT INTO employees (first_name, last_name, role_id, manager_id)
-            VALUES (?,?,?,?)`, newEmployee
+            `INSERT INTO employees (first_name, last_name, role_id, manager_id, department_id)
+            VALUES (?,?,?,?,?)`, newEmployee
         )
     }
 
